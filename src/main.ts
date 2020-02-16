@@ -4,6 +4,13 @@ import router from './router'
 import store from './store'
 require('./styles/index.scss');
 import 'bootstrap';
+import firebaseConfig from './firebaseconfig/index'
+import firebase from 'firebase';
+import {AuthController} from "@/controllers/usercontrollers/AuthController";
+
+firebase.initializeApp(firebaseConfig);
+AuthController.auth = firebase.auth();
+AuthController.db = firebase.firestore();
 
 Vue.config.productionTip = false;
 
