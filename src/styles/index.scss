@@ -1,0 +1,40 @@
+@import "~bootstrap/scss/bootstrap";
+#app, html, body {
+    width: 100%;
+    height: 100%;
+}
+
+#app {
+    background: url("../images/startbg.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: 50%, 50%;
+}
+
+.chat-userhandler {
+    width: 25%;
+    height: 65%;
+    margin: auto;
+    background: rgb(203,222,241);
+    background: radial-gradient(circle, rgba(203,222,241,1) 0%, rgba(250,250,250,1) 100%);
+    border-bottom-right-radius: 15px;
+    border-top-left-radius: 8px;
+    -webkit-box-shadow: 11px 2px 18px -5px rgba(0,0,0,0.75);
+    -moz-box-shadow: 11px 2px 18px -5px rgba(0,0,0,0.75);
+    box-shadow: 11px 2px 18px -5px rgba(0,0,0,0.75);
+    transform: translateY(30%);
+
+    &-button {
+        width: 60%;
+    }
+
+    &-content {
+        width: 80%;
+        margin: auto;
+        padding-top: 5px;
+
+        p {
+            font-size: 15px;
+        }
+    }
+}
