@@ -1,27 +1,32 @@
 <template>
     <div class="user-list">
-        <div class="user-list-expandable">
-            <p>Chats list <span><i class="fas fa-sort-down"></i></span></p>
-                <div :class="[chatListExpanded?  'collapsed': '','user-list-expandable-items']"  id="chat-list">
-                    asdasda
-                </div>
+        <div class="user-list-toppanel">
+            <div class="user-list-toppanel-navitem" @click="changeTab('ChatList')">Chats</div>
+            <div class="user-list-toppanel-navitem" @click="changeTab('FriendsList')">Friends</div>
         </div>
-        <div class="user-list-expandable">
-            <p>Friends list <span><i class="fas fa-sort-down"></i></span></p>
-                <div class="user-list-expandable-items" id="friend-list">
-
-                </div>
+        <div class="user-list-items">
+            <component :is="currentTab"/>
         </div>
     </div>
 </template>
 
 <script lang="ts">
     import { Component, Vue } from 'vue-property-decorator';
+    import ChatList from './lists/ChatList.vue'
 
-    @Component
+    @Component({
+        components: {
+            ChatList,
+            FriendsList: () => import("@/regions/userlistregion/lists/FriendsList.vue")
+        }
+    })
     export default class UserList extends Vue {
-        chatListExpanded: boolean = true;
-        friendListExpanded: boolean = true;
+        currentTab: string = 'ChatList';
+
+        changeTab(tabName: string): void {
+
+            this.currentTab = tabName
+        }
     }
 </script>
 
@@ -33,42 +38,38 @@
         background-image: url("../../images/sidemenu.png");
         background-repeat: no-repeat;
         background-position: 10%, 70%;
+        border-right: 1px solid gray;
 
-        &-expandable {
+        &-items {
+            padding-top: 30px;
+        }
+
+        &-toppanel {
             width: 100%;
-            max-height: 80%;
-            margin-block-start: 0.1em;
-            margin-block-end: 0.1em;
-            margin-inline-start: 0;
-            margin-inline-end: 0;
+            height: 7%;
+            background-color: rgba(203, 211, 255, 0.6);
+            border-bottom: 2px solid #7b76b5;
+            position: relative;
+            -webkit-box-shadow: 4px 15px 29px -23px rgba(0,0,0,0.75);
+            -moz-box-shadow: 4px 15px 29px -23px rgba(0,0,0,0.75);
+            box-shadow: 4px 15px 29px -23px rgba(0,0,0,0.75);
+            display: flex;
+            justify-content: center;
 
-            &-items {
-                transition: all 12.5s; // to be replace, in component get current window height and do math for half screen and set it with pixels
-                width: 90%;
-                margin: auto;
-                max-height: 0;
-                opacity: 0;
-            }
-
-            p {
-                margin-block-start: 0.1em;
-                margin-block-end: 0.1em;
-                margin-inline-start: 0;
-                margin-inline-end: 0;
-                padding: {
-                    top: 15px;
-                    left: 15%;
-                }
+            &-navitem {
+                width: 30%;
+                text-align: center;
+                padding-top: 15px;
+                text-shadow: 2px 2px 2px #000000;
                 color: white;
-                i {
-                    transform: translateY(-2px);
-                    padding-left: 3px;
-                }
+                cursor: pointer;
             }
         }
-    }
-    .collapsed {
-        max-height: 500px;
-        opacity: 1;
+
+        &-items {
+            height: 93%;
+            width: 100%;
+            overflow-y: auto;
+        }
     }
 </style>
