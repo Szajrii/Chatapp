@@ -60,7 +60,6 @@
                 width: 30%;
                 text-align: center;
                 padding-top: 15px;
-                text-shadow: 2px 2px 2px #000000;
                 color: white;
                 cursor: pointer;
             }

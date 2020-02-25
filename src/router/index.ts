@@ -4,6 +4,7 @@ import Start from '../views/Start.vue'
 import Login from '../components/Login.vue';
 import Register from '../components/Register.vue';
 import Main from '../views/Main.vue';
+import FriendsManagement from '../regions/chatregion/friendsmanagement/FriendsManagement.vue'
 
 Vue.use(VueRouter);
 
@@ -28,7 +29,14 @@ const routes = [
     {
         path: '/app',
         name: 'main',
-        component: Main
+        component: Main,
+        children: [
+            {
+                path: '/app/friendslist',
+                name: 'friends',
+                component: FriendsManagement
+            }
+        ]
     }
 ];
 

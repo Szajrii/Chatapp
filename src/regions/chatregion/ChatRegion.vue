@@ -1,7 +1,9 @@
 <template>
     <div class="chat-region">
         <div class="chat-region-toppanel"></div>
-        <div class="chat-region-app"></div>
+        <div class="chat-region-app">
+            <router-view />
+        </div>
     </div>
 </template>
 
