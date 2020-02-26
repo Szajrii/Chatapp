@@ -18,6 +18,7 @@
     import router from '../router'
     import { Component, Vue } from 'vue-property-decorator';
     import {AuthController} from '../controllers/usercontrollers/AuthController';
+
     @Component
     export default class Login extends Vue {
         private email: string = '';
@@ -29,14 +30,7 @@
             e.preventDefault();
             AuthController.logInUser(this.email, this.password)
                 .then(() => {
-                    AuthController.getUserName(this.email)
-                        .then(name => {
-                            this.$store.commit('setUser', {
-                                email: this.email,
-                                user: name
-                            });
-                            router.push({path: '/app'})
-                        });
+                    router.push({name: 'main', params: {'email': this.email} });
                 })
                 .catch(err => {
                     this.errormsg = err;

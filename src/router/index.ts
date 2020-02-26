@@ -27,13 +27,15 @@ const routes = [
         ]
     },
     {
-        path: '/app',
+        path: '/:email',
         name: 'main',
         component: Main,
+        props: true,
         children: [
             {
-                path: '/app/friendslist',
+                path: 'friendslist',
                 name: 'friends',
+                props: true,
                 component: FriendsManagement
             }
         ]

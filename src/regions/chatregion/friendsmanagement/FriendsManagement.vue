@@ -7,15 +7,16 @@
                     <button class="btn btn-primary" @click="findUser">Search</button>
                 </div>
                 <div class="friends-management-finder-result">
+                    <p @click="sendUserRequest">asdas</p>
                     <FriendsManagementElement :userName="userFound" type="finder" v-if="userFound"/>
                     <p v-else>Given user does not exist</p>
                 </div>
             </ExpandableElement>
         </div>
         <div class="friends-management-request">
-            <ExpandableElement buttonName="Friend requests(0)" identifier="collapse2">
+            <ExpandableElement :buttonName="'Friend requests(' + requests.length + ')'" identifier="collapse2">
                 <div class="friends-management-request-list">
-                    <FriendsManagementElement userName="Maciek" type="request"/>
+                    <FriendsManagementElement :userName="request" type="request" v-for="(request, index) in requests" :key="'request number' + index"/>
                 </div>
             </ExpandableElement>
         </div>
@@ -34,6 +35,7 @@
     import ExpandableElement from "@/components/ExpandableElement.vue";
     import FriendsManagementElement from './FriendManagementElement.vue'
     import {UserController} from "@/controllers/appcontroller/usercontroller/UserController";
+    import {AuthController} from "@/controllers/usercontrollers/AuthController";
 
     @Component({
         components: {
@@ -45,6 +47,10 @@
         friendsController: UserController = new UserController(this.$store.state.user);
         userSearch: string = 'Type nick name here';
         userFound: string | null = null;
+
+        get requests() {
+            return this.$store.state.requests;
+        }
 
         findUser() {
             if (this.userFound === this.userSearch) {
@@ -60,6 +66,10 @@
                     })
                     .catch(err => console.log(err));
             }
+        }
+
+        private sendUserRequest() {
+            this.friendsController.sendFriendRequest(this.userFound);
         }
     }
 </script>

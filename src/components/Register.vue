@@ -40,12 +40,8 @@
                     if (!verdict) {
                         AuthController.registerUser(this.email, this.password)
                             .then(() => {
-                                this.$store.commit('setUser', {
-                                    email: this.email,
-                                    user: this.nickname
-                                });
                                 AuthController.setDefaultDataBaseData(this.nickname, this.email);
-                                router.push({path: '/app'});
+                                router.push({name: 'main', params: {'email': this.email}});
                             })
                             .catch(err => {
                                 this.errormsg = err;

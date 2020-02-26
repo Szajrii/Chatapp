@@ -3,7 +3,7 @@ import Firestore = firebase.firestore.Firestore;
 
 export abstract class AppController {
     protected db: Firestore;
-    private userName: string;
+    protected userName: string;
 
     constructor(name: string) {
         this.db = firebase.firestore();
