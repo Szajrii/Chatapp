@@ -6,8 +6,8 @@
             <p>{{text}}</p>
         </div>
         <div class="friends-management-element-actions">
-            <div><i :class="firstIcon.className" :style="{'color': firstIcon.color}" :title="firstIcon.title"></i></div>
-            <div v-if="type !== 'finder'"><i :class="secondIcon.className" :style="{'color': secondIcon.color}" :title="secondIcon.title"></i></div>
+            <div><i :class="firstIcon.className" :style="{'color': firstIcon.color}" :title="firstIcon.title" @click="dispachAction('firstIcon')"></i></div>
+            <div v-if="type !== 'finder'"><i :class="secondIcon.className" :style="{'color': secondIcon.color}" :title="secondIcon.title" @click="dispachAction('secondIcon')"></i></div>
         </div>
     </div>
 </template>
@@ -26,6 +26,14 @@
         userName: string | undefined;
         @Prop()
         type: string | undefined;
+
+        dispachAction(icon: string) {
+            this.$emit('iconAction', {
+                icon,
+                type: this.type,
+                userName: this.userName
+            })
+        }
 
         get bgColor(): string {
             const colors = ['#6314b5', '#ffa415', '#61c23d', '#1652c2', '#c23448'];

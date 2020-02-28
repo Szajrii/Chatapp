@@ -7,7 +7,8 @@ export default new Vuex.Store({
     state: {
         user: '',
         email: '',
-        requests: []
+        requests: [],
+        friendList: []
     },
     mutations: {
         setUser(state, payload) {
@@ -16,6 +17,9 @@ export default new Vuex.Store({
         },
         setRequests(state, requests) {
             state.requests = requests;
+        },
+        setFriendList(state, list) {
+            state.friendList = list;
         }
     },
     actions: {

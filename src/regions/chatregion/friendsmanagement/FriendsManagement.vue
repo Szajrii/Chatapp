@@ -7,8 +7,7 @@
                     <button class="btn btn-primary" @click="findUser">Search</button>
                 </div>
                 <div class="friends-management-finder-result">
-                    <p @click="sendUserRequest">asdas</p>
-                    <FriendsManagementElement :userName="userFound" type="finder" v-if="userFound"/>
+                    <FriendsManagementElement :userName="userFound" type="finder" v-if="userFound" @iconAction="performAction"/>
                     <p v-else>Given user does not exist</p>
                 </div>
             </ExpandableElement>
@@ -16,14 +15,14 @@
         <div class="friends-management-request">
             <ExpandableElement :buttonName="'Friend requests(' + requests.length + ')'" identifier="collapse2">
                 <div class="friends-management-request-list">
-                    <FriendsManagementElement :userName="request" type="request" v-for="(request, index) in requests" :key="'request number' + index"/>
+                    <FriendsManagementElement :userName="request" type="request" v-for="(request, index) in requests" :key="'request number' + index" @iconAction="performAction"/>
                 </div>
             </ExpandableElement>
         </div>
         <div class="friends-management-friendlist">
-            <ExpandableElement buttonName="Friend list(0)" identifier="collapse3">
+            <ExpandableElement :buttonName="'Friend list(' + friendsList.length +')'" identifier="collapse3">
                 <div class="friends-management-friendlist-users">
-                    <FriendsManagementElement userName="Tomek" type="management"/>
+                    <FriendsManagementElement :userName="friend" type="management" @iconAction="performAction" v-for="(friend, index) in friendsList" :key="'mangementfriend' + index"/>
                 </div>
             </ExpandableElement>
         </div>
@@ -52,7 +51,32 @@
             return this.$store.state.requests;
         }
 
-        findUser() {
+        get friendsList() {
+            return this.$store.state.friendList;
+        }
+
+        performAction({userName, icon, type}: FriendsManagementElementData): void {
+            switch (type) {
+                case 'finder':
+                    this.sendUserRequest();
+                    break;
+                case 'request':
+                    if (icon === 'firstIcon') {
+                        this.acceptUser(userName);
+                    } else {
+                        this.declineUser(userName, this.$attrs.email);
+                    }
+                    break;
+                case 'management':
+                    if (icon === 'firstIcon') {
+
+                    } else {
+                        this.friendsController.deleteUser(userName, this.$attrs.email);
+                    }
+            }
+        }
+
+        findUser(): void {
             if (this.userFound === this.userSearch) {
                 console.info('User already was found');
             } else {
@@ -68,9 +92,29 @@
             }
         }
 
-        private sendUserRequest() {
+        private sendUserRequest(): void {
+            // @ts-ignore
             this.friendsController.sendFriendRequest(this.userFound);
         }
+
+        private acceptUser(name: string): void {
+            this.friendsController.acceptUserRequest(name, this.$attrs.email);
+        }
+
+        private declineUser(name: string, email: string): void {
+            this.friendsController.declineUserRequest(name, email);
+        }
+
+        private deleteUser(name: string, email: string): void {
+
+        }
+
+    }
+
+    type FriendsManagementElementData = {
+        userName: string,
+        icon: string,
+        type: string
     }
 </script>
 

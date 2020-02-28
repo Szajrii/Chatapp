@@ -21,7 +21,7 @@
     export default class Main extends Vue {
 
         // @ts-ignore
-        userData: UserRepository = new UserRepository(this.$attrs.email, this.$store);
+        private userData: UserRepository = new UserRepository(this.$attrs.email, this.$store);
 
 
         beforeCreate(): void {

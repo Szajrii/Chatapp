@@ -2,19 +2,20 @@
     <div class="user-list-friend-item">
         <div class="user-list-friend-item-content">
             <div class="user-list-friend-item-content-avatar">
-                M
+                {{name.charAt(0).toUpperCase()}}
             </div>
-            <div class="user-list-friend-item-content-name">Maciek</div>
+            <div class="user-list-friend-item-content-name">{{name}}</div>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-    import { Component, Vue } from 'vue-property-decorator';
+    import { Component, Vue, Prop } from 'vue-property-decorator';
 
     @Component
     export default class UserFriendItem extends Vue {
-
+        @Prop()
+        name: string | undefined;
     }
 </script>
 
