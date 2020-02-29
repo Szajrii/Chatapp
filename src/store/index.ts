@@ -8,7 +8,8 @@ export default new Vuex.Store({
         user: '',
         email: '',
         requests: [],
-        friendList: []
+        friendList: [],
+        chats: {}
     },
     mutations: {
         setUser(state, payload) {
@@ -20,6 +21,9 @@ export default new Vuex.Store({
         },
         setFriendList(state, list) {
             state.friendList = list;
+        },
+        setChats(state, chats) {
+            state.chats = chats;
         }
     },
     actions: {

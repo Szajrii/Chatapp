@@ -1,27 +1,36 @@
 <template>
     <div class="user-list-chat-item">
         <div class="user-list-chat-item-content">
-            <div class="user-list-chat-item-content-avatar">M</div>
+            <div class="user-list-chat-item-content-avatar">{{user.charAt(0).toUpperCase()}}</div>
             <div class="user-list-chat-item-content-text">
                 <div class="user-list-chat-item-content-text-username">
-                    <span class="text-black-50">Maciek</span>
+                    <span class="text-black-50">{{user}}</span>
                 </div>
                 <div class="user-list-chat-item-content-text-message">
-                    <span>Siema idziesz na piwo?</span>
+                    <span>{{message}}</span>
                 </div>
             </div>
             <div class="user-list-chat-item-content-date">
-                20:23
+                {{date}}
             </div>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-    import { Component, Vue } from 'vue-property-decorator';
+    import { Component, Vue, Prop } from 'vue-property-decorator';
 
     @Component
     export default class UserChatItem extends Vue {
+
+        @Prop()
+        user: string
+        @Prop()
+        date: string
+        @Prop()
+        message: string
+        @Prop()
+        lastMessageSeen: boolean
 
     }
 </script>
@@ -53,11 +62,11 @@
             }
 
             &-text {
-                width: 75%;
+                width: 70%;
                 padding-left: 5px;
             }
             &-date {
-                width: 15%;
+                width: 20%;
                 text-align: right;
             }
         }

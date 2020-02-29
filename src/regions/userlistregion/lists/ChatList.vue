@@ -1,6 +1,6 @@
 <template>
     <div class="chat-list">
-        <UserChatItem/>
+        <UserChatItem v-for="(chat, index) in chats" :user="chat.user" :date="chat.date" :message="chat.message" :key="'chatitem' + index"/>
     </div>
 </template>
 
@@ -14,7 +14,23 @@
         }
     })
     export default class ChatList extends Vue {
+        get chats() {
+            const chats = this.$store.state.chats;
+            chats[Symbol.iterator] = function* () {
+            const keys: string[] = Object.keys(this);
 
+            for(let i = 0; i < keys.length; i++) {
+                const valueToReturn = {
+                    user: keys[i],
+                    lastMessageSeen: chats[keys[i]].lastMessageSeen,
+                    message: chats[keys[i]].messages[chats[keys[i]].messages.length - 1].message,
+                    date: chats[keys[i]].messages[chats[keys[i]].messages.length - 1].date.replace(",", "")
+                };
+                yield valueToReturn;
+            }
+            };
+            return [...chats];
+        }
     }
 </script>
 

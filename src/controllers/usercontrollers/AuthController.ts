@@ -30,7 +30,7 @@ export class AuthController{
                 AuthController.db.collection('Users').doc(email).set({
                     name,
                     email,
-                    chats: [],
+                    chats: {},
                     friends: {
                         list: [],
                         requests: []

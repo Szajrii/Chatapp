@@ -11,6 +11,7 @@
     import {Component, Vue} from 'vue-property-decorator';
     import {AuthController} from "@/controllers/usercontrollers/AuthController";
     import {UserRepository} from '@/controllers/appcontroller/usercontroller/UserRepository'
+    import {ChatController} from '@/controllers/appcontroller/chatcontroller/ChatController'
 
     @Component({
         components: {
@@ -22,6 +23,8 @@
 
         // @ts-ignore
         private userData: UserRepository = new UserRepository(this.$attrs.email, this.$store);
+
+        private userChats: ChatController = new ChatController(this.$attrs.email, this.$store);
 
 
         beforeCreate(): void {

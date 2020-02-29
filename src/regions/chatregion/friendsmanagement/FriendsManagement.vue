@@ -69,7 +69,7 @@
                     break;
                 case 'management':
                     if (icon === 'firstIcon') {
-
+                        this.$router.push({name: 'chat', params: {user: userName}})
                     } else {
                         this.friendsController.deleteUser(userName, this.$attrs.email);
                     }

@@ -5,6 +5,7 @@ import Login from '../components/Login.vue';
 import Register from '../components/Register.vue';
 import Main from '../views/Main.vue';
 import FriendsManagement from '../regions/chatregion/friendsmanagement/FriendsManagement.vue'
+import ChatWindow from "@/regions/chatregion/chatwindow/ChatWindow.vue";
 
 Vue.use(VueRouter);
 
@@ -37,6 +38,12 @@ const routes = [
                 name: 'friends',
                 props: true,
                 component: FriendsManagement
+            },
+            {
+                path: 'chat=:user',
+                name: 'chat',
+                props: true,
+                component: ChatWindow
             }
         ]
     }
