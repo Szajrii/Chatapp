@@ -1,7 +1,7 @@
 <template>
     <div class="friend-list">
         <div class="friend-list-managment" @click="goToFriendsList">Manage your friends list <i class="fas fa-angle-double-right"></i></div>
-        <UserFriendItem v-for="(friend, index) in friendsList" :key="'userFriend' + index" :name="friend"/>
+        <UserFriendItem v-for="(friend, index) in friendsList" :key="'userFriend' + index" :name="friend" @click.native="goToChat(friend)"/>
     </div>
 </template>
 
@@ -20,6 +20,10 @@
         goToFriendsList() {
             if(this.$route.name !== 'friends')
                 router.push({name: 'friends'})
+        }
+
+        goToChat(name: string) {
+            this.$router.push({name: 'chat', params: {user: name}});
         }
 
         get friendsList(): string[] {

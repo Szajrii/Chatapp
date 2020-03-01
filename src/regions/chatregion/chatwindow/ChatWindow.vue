@@ -1,33 +1,22 @@
 <template>
     <div class="chat-window">
         <div class="chat-window-content">
-            <ChatElement />
-            <ChatElement />
-            <ChatElement />
-            <ChatElement />
-            <ChatElement />
-            <ChatElement />
-            <ChatElement />
-            <ChatElement />
-            <ChatElement />
-            <ChatElement />
-            <ChatElement />
-            <ChatElement />
-            <ChatElement />
-            <ChatElement />
-            <ChatElement />
-            <ChatElement />
+            <div class="chat-window-content-wrapper" v-if="chatExist">
+                <ChatElement v-for="(c, index) in chat" :sender="c.sender" :date="c.date" :message="c.message" :destinationUser="destinationUser" :key="'chatelement' + index"/>
+            </div>
+            <p v-else>Say hi to your friend</p>
         </div>
         <div class="chat-window-message">
-            <textarea class="form-control" placeholder="Type your message">
+            <textarea class="form-control" placeholder="Type your message" v-model="message" @keyup="sendMessage">
             </textarea>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-    import { Component, Vue } from 'vue-property-decorator';
+    import { Component, Vue} from 'vue-property-decorator';
     import ChatElement from './ChatElement.vue'
+    import {SingleChatController} from "@/controllers/appcontroller/chatcontroller/SingleChatController";
 
     @Component({
         components: {
@@ -36,6 +25,39 @@
     })
     export default class ChatWindow extends Vue {
 
+        message: string = '';
+
+        private chatController: SingleChatController = new SingleChatController(this.$attrs.email);
+
+        sendMessage(event: KeyboardEvent) {
+            if (event.code === 'Enter' && !event.shiftKey && this.message !== '') {
+                event.preventDefault();
+                this.chatController.sendMessage(this.$attrs.user, this.message)
+                    .then(() => {
+                        const chatWindow = document.getElementsByClassName('chat-window-content')[0];
+                        chatWindow.scrollTo(0, chatWindow.scrollHeight + 200);
+                    });
+                this.message = '';
+            }
+        }
+
+        get destinationUser() {
+            return this.$attrs.user;
+        }
+        get chat() {
+            return this.$store.getters.getChat(this.$route.params.user).messages;
+        }
+        get chatExist() {
+            return this.$store.getters.getChat(this.$route.params.user) != undefined
+        }
+        get chatsUnlocked() {
+            return this.$store.state.chatsAvailable;
+        }
+
+        mounted(): void {
+            const chatWindow = document.getElementsByClassName('chat-window-content')[0];
+            chatWindow.scrollTo(0, chatWindow.scrollHeight + 200);
+        }
     }
 </script>
 
@@ -48,6 +70,11 @@
             width: 100%;
             height: 80%;
             overflow-y: auto;
+
+            &-wrapper {
+                width: 100%;
+                height: 100%;
+            }
         }
 
         &-message {
@@ -63,13 +90,12 @@
 
     }
     ::-webkit-scrollbar {
-        width: 10px;
-        background-color: rgba(99, 225, 251, 0.54);
+        width: 7px;
+        background-color: rgba(209, 251, 230, 0.54);
     }
     /* Track */
     ::-webkit-scrollbar-track {
         box-shadow: inset 0 0 5px grey;
-        border-radius: 10px;
     }
 
     /* Handle */

@@ -9,9 +9,13 @@ export default new Vuex.Store({
         email: '',
         requests: [],
         friendList: [],
-        chats: {}
+        chats: {},
+        chatsAvailable: false
     },
     mutations: {
+        unlockChats(state) {
+            state.chatsAvailable = true;
+        },
         setUser(state, payload) {
             state.user = payload.user;
             state.email = payload.email
@@ -24,6 +28,12 @@ export default new Vuex.Store({
         },
         setChats(state, chats) {
             state.chats = chats;
+        }
+    },
+    getters: {
+        getChat: (state) => (userName: string) => {
+            // @ts-ignore
+            return state.chats[userName];
         }
     },
     actions: {

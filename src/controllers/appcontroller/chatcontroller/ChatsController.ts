@@ -1,15 +1,19 @@
 import {AppController} from "@/controllers/appcontroller/AppController";
 import {Store} from "vuex";
 
-export class ChatController extends AppController{
+export class ChatsController extends AppController{
 
     private subscription: () => void;
 
     constructor(name: string, private store: Store<any>) {
         super(name);
-        this.setChats();
+        this.setChats()
+            .then(() => {
+                this.store.commit('unlockChats');
+            });
         this.subscription = this.db.collection('Users').doc(this.userName).onSnapshot(snapshot => {
-
+            // @ts-ignore
+            this.store.commit('setChats', snapshot.data().chats);
         })
     }
 

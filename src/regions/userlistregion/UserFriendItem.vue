@@ -25,6 +25,7 @@
         width: 100%;
         height: 50px;
         border-bottom: 1px solid gray;
+        cursor: pointer;
 
         &-content {
             width: 90%;

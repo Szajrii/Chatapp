@@ -1,6 +1,14 @@
 <template>
     <div class="chat-list">
-        <UserChatItem v-for="(chat, index) in chats" :user="chat.user" :date="chat.date" :message="chat.message" :key="'chatitem' + index"/>
+        <UserChatItem
+                v-for="(chat, index) in chats"
+                :user="chat.user"
+                :date="chat.date"
+                :message="chat.message"
+                :lastMessageSeen="chat.lastMessageSeen"
+                :key="'chatitem' + index"
+                @click.native="goToChat(chat.user)"
+        />
     </div>
 </template>
 
@@ -14,6 +22,11 @@
         }
     })
     export default class ChatList extends Vue {
+
+        goToChat(name: string) {
+            this.$router.push({name: 'chat', params: {user: name}});
+        }
+
         get chats() {
             const chats = this.$store.state.chats;
             chats[Symbol.iterator] = function* () {
