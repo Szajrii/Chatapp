@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-    import { Component, Vue} from 'vue-property-decorator';
+    import { Component, Vue, Watch} from 'vue-property-decorator';
     import ChatElement from './ChatElement.vue'
     import {SingleChatController} from "@/controllers/appcontroller/chatcontroller/SingleChatController";
 
@@ -28,6 +28,11 @@
         message: string = '';
 
         private chatController: SingleChatController = new SingleChatController(this.$attrs.email);
+
+        @Watch('chat')
+        updateLastSeen() {
+            this.chatController.updateSeenMessage(this.$attrs.user);
+        }
 
         sendMessage(event: KeyboardEvent) {
             if (event.code === 'Enter' && !event.shiftKey && this.message !== '') {
@@ -50,13 +55,15 @@
         get chatExist() {
             return this.$store.getters.getChat(this.$route.params.user) != undefined
         }
-        get chatsUnlocked() {
-            return this.$store.state.chatsAvailable;
-        }
 
         mounted(): void {
             const chatWindow = document.getElementsByClassName('chat-window-content')[0];
             chatWindow.scrollTo(0, chatWindow.scrollHeight + 200);
+        }
+
+        created(): void {
+            this.chatController.updateSeenMessage(this.$attrs.user);
+            this.$store.commit('changeTab', this.$attrs.user)
         }
     }
 </script>

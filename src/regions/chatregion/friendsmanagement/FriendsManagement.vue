@@ -44,7 +44,7 @@
     })
     export default class FriendsManagement extends Vue {
         friendsController: UserController = new UserController(this.$store.state.user);
-        userSearch: string = 'Type nick name here';
+        userSearch: string = '';
         userFound: string | null = null;
 
         get requests() {
@@ -105,10 +105,9 @@
             this.friendsController.declineUserRequest(name, email);
         }
 
-        private deleteUser(name: string, email: string): void {
-
+        created(): void {
+            this.$store.commit('changeTab', 'Friends Management')
         }
-
     }
 
     type FriendsManagementElementData = {
@@ -167,6 +166,16 @@
                 width: 60%;
                 margin: auto;
             }
+        }
+    }
+    @media only screen and (max-width: 850px) {
+
+        .friends-management-finder-result, .friends-management-finder-body {
+            width: 100%;
+        }
+
+        .friends-management-request-list, .friends-management-friendlist-users {
+            width: 90%;
         }
     }
 </style>

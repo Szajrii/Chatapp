@@ -41,6 +41,22 @@ export class SingleChatController extends AppController{
         }
     }
 
+    public async updateSeenMessage(destination: string): Promise<void> {
+        const collection: QuerySnapshot = await this.db.collection('Users').get();
+        const destinationEmail = this.getUserDestinationEmail(destination, collection);
+        const userCollection = await this.db.collection('Users').doc(this.userName).get();
+        // @ts-ignore
+        const chat = userCollection.data().chats;
+        chat[destination].lastMessageSeen = true;
+        console.log(destination)
+
+        this.db.collection('Users').doc(this.userName).update({
+            chats: {
+                ...chat
+            }
+        });
+    }
+
     private async performSending(destination: string, destinationEmail: string, sender: string, messages: any[]): Promise<void> {
         const sourceData = await this.db.collection('Users').doc(this.userName).get();
         // @ts-ignore

@@ -147,4 +147,11 @@
             }
         }
     }
+
+    @media only screen and (max-width: 650px) {
+        .friends-management-element-user {
+            font-size: 15px;
+            font-weight: 600;
+        }
+    }
 </style>

@@ -1,8 +1,8 @@
 <template>
     <div class="user-list">
         <div class="user-list-toppanel">
-            <div class="user-list-toppanel-navitem" @click="changeTab('ChatList')">Chats</div>
-            <div class="user-list-toppanel-navitem" @click="changeTab('FriendsList')">Friends</div>
+            <div class="user-list-toppanel-navitem" @click="changeTab('ChatList')" :class="{'active': currentTab === 'ChatList'}">Chats</div>
+            <div class="user-list-toppanel-navitem" @click="changeTab('FriendsList')" :class="{'active': currentTab === 'FriendsList'}">Friends</div>
         </div>
         <div class="user-list-items">
             <component :is="currentTab"/>
@@ -32,6 +32,20 @@
 
 <style scoped lang="scss">
 
+    .active {
+        font-size: 20px;
+
+        &:after {
+            content: '';
+            display: block;
+            width: 100%;
+            height: 4px;
+            -webkit-box-shadow: 2px 16px 151px -34px rgba(252,101,0,1);
+            -moz-box-shadow: 2px 16px 151px -34px rgba(252,101,0,1);
+            box-shadow: 2px 16px 151px -34px rgba(252,101,0,1);
+            background-color: white;
+        }
+    }
     .user-list {
         width: 20%;
         height: 100%;
@@ -69,6 +83,43 @@
             height: 93%;
             width: 100%;
             overflow-y: auto;
+        }
+    }
+
+    @media only screen and (max-width: 1400px) {
+        .user-list {
+            width: 25%;
+            height: 100%;
+
+            &-toppanel {
+                height: 10%;
+            }
+
+            &-items {
+                height: 90%;
+            }
+        }
+    }
+
+    @media only screen and (max-width: 1000px) {
+        .user-list {
+            width: 30%;
+            height: 100%;
+
+            &-toppanel {
+                height: 13%;
+            }
+
+            &-items {
+                height: 87%;
+            }
+        }
+    }
+
+    @media only screen and (max-width: 750px) {
+        .user-list-toppanel-navitem {
+            margin-right: 10px;
+            margin-left: 10px;
         }
     }
 </style>

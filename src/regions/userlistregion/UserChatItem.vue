@@ -92,4 +92,17 @@
             }
         }
     }
+
+    @media only screen and (max-width: 1000px) {
+        .user-list-chat-item-content {
+            width: 95%;
+            font-size: 11px;
+
+            &-date {
+                padding-right: 5px;
+                text-align: left;
+                min-width: 27%;
+            }
+        }
+    }
 </style>

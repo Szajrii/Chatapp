@@ -7,10 +7,7 @@ export class ChatsController extends AppController{
 
     constructor(name: string, private store: Store<any>) {
         super(name);
-        this.setChats()
-            .then(() => {
-                this.store.commit('unlockChats');
-            });
+        this.setChats();
         this.subscription = this.db.collection('Users').doc(this.userName).onSnapshot(snapshot => {
             // @ts-ignore
             this.store.commit('setChats', snapshot.data().chats);

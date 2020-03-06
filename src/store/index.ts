@@ -10,12 +10,9 @@ export default new Vuex.Store({
         requests: [],
         friendList: [],
         chats: {},
-        chatsAvailable: false
+        currentTab: ''
     },
     mutations: {
-        unlockChats(state) {
-            state.chatsAvailable = true;
-        },
         setUser(state, payload) {
             state.user = payload.user;
             state.email = payload.email
@@ -28,6 +25,9 @@ export default new Vuex.Store({
         },
         setChats(state, chats) {
             state.chats = chats;
+        },
+        changeTab(state, tabName) {
+            state.currentTab = tabName;
         }
     },
     getters: {
