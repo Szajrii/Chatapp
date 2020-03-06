@@ -24,13 +24,17 @@
     export default class UserChatItem extends Vue {
 
         @Prop()
-        user: string
+        // @ts-ignore
+        user: string;
         @Prop()
-        date: string
+        // @ts-ignore
+        date: string;
         @Prop()
-        message: string
+        // @ts-ignore
+        message: string;
         @Prop()
-        lastMessageSeen: boolean
+        // @ts-ignore
+        lastMessageSeen: boolean;
 
         get activeUser() {
             return this.$route.params.user;
